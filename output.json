@@ -1,0 +1,82 @@
+[
+  {
+    "heading": "What is Keploy?​",
+    "url": "#heading",
+    "body": ""
+  },
+  {
+    "heading": "Step 1 : Record Unique Network Interactions as Test Case​",
+    "url": "#step-1--record-unique-network-interactions-as-test-case",
+    "body": "Once you start the application in record mode to capture API calls as test cases.\nNow, when the application serves an API, all the unique network interactions are stored within Keploy server as a\ntest-case."
+  },
+  {
+    "heading": "Step 2 : Replay Test-Cases​",
+    "url": "#step-2--replay-test-cases",
+    "body": "Let's say you developed new application version(v2). To test locally, start the Keploy in test mode to replay all\nrecorded API calls/test-cases previously captured in record-mode.\nNow, when the application starts:\nYou can test with Keploy locally or can integrate Keploy with popular testing-frameworks and existing CI pipelines.\nHope this helps you out, if you still have any questions, reach out to us ."
+  },
+  {
+    "heading": "Contact Us​",
+    "url": "#contact-us",
+    "body": "If you have any questions or need help, please feel free to reach out to us at hello@keploy.io or reach out us on\n or open a discussion on"
+  },
+  {
+    "heading": "Key Features​",
+    "url": "#key-features",
+    "body": "Keploy is built for a wide variety of use-cases, however, to kick things off, let's dive into some key features that\nmake Keploy stand out from the rest of the testing platforms out there."
+  },
+  {
+    "heading": "🧩 Combined Test Coverage in CI/CD:​",
+    "url": "#-combined-test-coverage-in-cicd",
+    "body": ""
+  },
+  {
+    "heading": "Run Tests with Mocks Anywhere You Like​",
+    "url": "#run-tests-with-mocks-anywhere-you-like",
+    "body": "Keploy has native integrations with your unit-testing libraries\nlike go-test, jUnit, jest, pyTest. Keploy gives combined test-coverage and can also be integrated in existing CI\npipelines easily within go-test, jUnit, jest, pyTest workflows.\nRun tests with mocks anywhere you like—locally on the CLI, in your CI pipeline, or even across a Kubernetes\ncluster. It's testing wherever you want it! 🌍"
+  },
+  {
+    "heading": "📽️ Works for Complex API Flows​",
+    "url": "#️-works-for-complex-api-flows",
+    "body": ""
+  },
+  {
+    "heading": "Can easily record complex API flows and replay them as tests and stubs.​",
+    "url": "#can-easily-record-complex-api-flows-and-replay-them-as-tests-and-stubs",
+    "body": "With Keploy, you can effortlessly record and replay intricate, distributed API flows as mocks and stubs. It's like\nhaving a time machine for your tests! ⏳\nKeploy will record all API calls and their subsequent network traffic served by the application. You can utilize your\nfavorite API management tools like Postman, Hoppscotch, or\neven Curl to generate test cases.\nKeploy automatically mocks network/external dependencies for all\nCRUD operations with correct responses.\nOnce recorded, you have the flexibility to replay and simulate the same flow with mutations/write calls locally or\nwithin your CI environment without needing to connect to external services/dependencies.\nNo more data dumps, stubs, or mocks for dependencies like DBs, internal services, or third-party services like twilio,\nshopify, or stripe are required anymore. 💡\nIdempotency guarantees are also not required in the application.\nMultiple Reads after write operations can be replicated automatically too. 🔄"
+  },
+  {
+    "heading": "♻️ Multi-Purpose Mocks​",
+    "url": "#️-multi-purpose-mocks",
+    "body": ""
+  },
+  {
+    "heading": "Re-Use Mocks for Testing Servers​",
+    "url": "#re-use-mocks-for-testing-servers",
+    "body": "Keploy generated dependency mocks can also be used as test case for the server. These tests can be used for use-cases\nlike chaos testing, e2e testing, integration testing, api and regression testing. 🌟"
+  },
+  {
+    "heading": "🌐 Code-less EBPF Instrumentation​",
+    "url": "#-code-less-ebpf-instrumentation",
+    "body": ""
+  },
+  {
+    "heading": "Network Layer Integration makes it Light-Weight​",
+    "url": "#network-layer-integration-makes-it-light-weight",
+    "body": "Keploy uses EBPF like a secret sauce to make integration code-less, language agnostic, and oh-so-lightweight. 🍲"
+  },
+  {
+    "heading": "🔍 Accurate Noise Detection​",
+    "url": "#-accurate-noise-detection",
+    "body": ""
+  },
+  {
+    "heading": "Eliminates random fields for Assertion​",
+    "url": "#eliminates-random-fields-for-assertion",
+    "body": "Keploy identifies noisy fields in the responses accurately like (\ntimestamps, random values) to ensure high quality tests.\nAs the application serves the API, Keploy re-run that API request with the captured dependency mocks.\nKeploy identifies differences in API responses, marking them as random/noisy fields. 🧐✅\nHope this helps you out, if you still have any questions, reach out to us ."
+  },
+  {
+    "heading": "Contact Us​",
+    "url": "#contact-us",
+    "body": "If you have any questions or need help, please feel free to reach out to us at hello@keploy.io or reach out us on\n or open a discussion on"
+  }
+]
