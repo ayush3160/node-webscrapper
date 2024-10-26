@@ -3,71 +3,94 @@ import puppeteer from 'puppeteer';
 import fs from 'fs/promises';
 
 async function scrapeWebsite(url: string) {
-    // Launch the browser
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
-    // Go to the URL
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
+    page.setViewport({ width: 1280, height: 926 });
     await page.waitForSelector('h1');
 
-    // Get the HTML content of the page
     const content = await page.content();
-
-    console.log(content);
-
-    // Load HTML into cheerio for parsing
     const $ = cheerio.load(content);
+
+    const regex = /^(https?:\/\/[^\/]+)/;
+    let match: string | null = url.match(regex)?.[0] || null;
+
+    await page.evaluate(() => {
+        document.querySelectorAll('li').forEach((li) => {
+            li.addEventListener('click', (event) => event.preventDefault(), true);
+        });
+    });
 
     const urlList: string[] = [];
 
-    $('a').each((i, link) => {
-        const href = $(link).attr('href');
-        if (href) {
+    const listItems = await page.$$('li');
+
+    for (const item of listItems) {
+        if (item) {
+            try {
+                await item.click(); // Click without redirection
+            } catch (error) {
+                continue;
+            }
+        }
+    }
+
+    const links = await page.$$('a');
+    for (const link of links) {
+        const href = await (await link.getProperty('href')).jsonValue();
+        let domain: string | null = href.match(regex)?.[0] || null;
+
+        if (domain !== null && domain === match) {
             urlList.push(href);
         }
-    });
+    }
 
-    return urlList;
+    let data = []
 
-    // Extract sections: heading, url (if available), and body text below the heading
-    // let data = [];
+    for (const url of urlList) {
 
-    // // Loop through headings (h1, h2, h3, etc.)
-    // $('h1, h2, h3, h4, h5, h6').each((i, heading) => {
-    //     const headingText = $(heading).text();
-    //     const headingUrl = $(heading).find('a').attr('href') || url;  // Get URL if it's within the heading
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-    //     // Find the next sibling elements that contain the body text
-    //     let bodyText = '';
-    //     let nextElem = $(heading).next();
+        page.setViewport({ width: 1280, height: 926 });
+        await page.waitForSelector('h1');
 
-    //     // Loop through siblings until you hit another heading or non-text element
-    //     while (nextElem.length && !nextElem.is('h1, h2, h3, h4, h5, h6')) {
-    //         if (nextElem.is('p')) {
-    //             bodyText += nextElem.text() + '\n';
-    //         }
-    //         nextElem = nextElem.next();
-    //     }
+        const content = await page.content();
+        const $ = cheerio.load(content);
 
-    //     // Push the object into the data array
-    //     data.push({
-    //         heading: headingText,
-    //         url: headingUrl,  // You can resolve relative URL here if needed
-    //         body: bodyText.trim()
-    //     });
-    // });
+        $('h1, h2, h3, h4, h5, h6').each((i, heading) => {
+            const headingText = $(heading).text();
+            const headingUrl = $(heading).find('a').attr('href') || url;
 
-    // // Close the browser
-    // await browser.close();
+            let bodyText = '';
+            let nextElem = $(heading).next();
 
-    // return data;
+            while (nextElem.length && !nextElem.is('h1, h2, h3, h4, h5, h6')) {
+                if (nextElem.is('p')) {
+                    bodyText += nextElem.text() + '\n';
+                }
+                nextElem = nextElem.next();
+            }
+
+            data.push({
+                heading: headingText,
+                url: url,
+                link: headingUrl,
+                body: bodyText.trim()
+            });
+        });
+    }
+
+    await browser.close();
+
+    fs.writeFile('data.json', JSON.stringify(data, null, 2));
+
+    return data;
 }
 
 // Usage
 (async () => {
     const result = await scrapeWebsite('http://localhost:3000/docs/keploy-explained/introduction/');
     console.log(result);
-    // fs.writeFile('output.json', JSON.stringify(result, null, 2));
 })();
